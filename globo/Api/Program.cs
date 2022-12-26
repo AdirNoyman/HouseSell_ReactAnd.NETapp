@@ -30,11 +30,23 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
-app.MapGet("/houses", (IHouseRepository repo) => repo.GetAll());
+app.MapGet("/houses", (IHouseRepository repo) => repo.GetAllHouses())
+// Let Swagger know what this API can return
+.Produces<HouseDto[]>(StatusCodes.Status200OK);
+
+app.MapGet("/houses/{houseId:int}", async (int houseId, IHouseRepository repo) =>
+{
+    var house = await repo.GetOneHouse(houseId);
+    if (house == null)
+    {
+        return Results.Problem($"House with Id {houseId}, was not found 😩.", statusCode: 404);
+    }
+
+    return Results.Ok(house);
+
+    // Let Swagger know what this API can return
+}).ProducesProblem(404).Produces<HouseDetailDto>(StatusCodes.Status200OK);
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+

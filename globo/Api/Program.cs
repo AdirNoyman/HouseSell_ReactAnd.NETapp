@@ -1,4 +1,5 @@
 using Api.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,10 +31,12 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
+// GET ALL  houses
 app.MapGet("/houses", (IHouseRepository repo) => repo.GetAllHouses())
-// Let Swagger know what this API can return
+// Let Swagger know what this API endpoint will return
 .Produces<HouseDto[]>(StatusCodes.Status200OK);
 
+// GET ONE house
 app.MapGet("/houses/{houseId:int}", async (int houseId, IHouseRepository repo) =>
 {
     var house = await repo.GetOneHouse(houseId);
@@ -44,8 +47,53 @@ app.MapGet("/houses/{houseId:int}", async (int houseId, IHouseRepository repo) =
 
     return Results.Ok(house);
 
-    // Let Swagger know what this API can return
+    // Let Swagger know what this API endpoint will return
 }).ProducesProblem(404).Produces<HouseDetailDto>(StatusCodes.Status200OK);
+
+// CREATE a new house
+// [FromBody] - tells .net to look for HouseDetailDto in the request body
+app.MapPost("/houses", async ([FromBody] HouseDetailDto dto, IHouseRepository repo) =>
+{
+    var newHouse = await repo.AddNewHouse(dto);
+    return Results.Created($"/houses/{newHouse.Id}", newHouse);
+}
+// Let Swagger know what this API endpoint will return
+).Produces<HouseDetailDto>(StatusCodes.Status201Created);
+
+// UPDATE a house
+// [FromBody] - tells .net to look for HouseDetailDto in the request body
+app.MapPut("/houses", async ([FromBody] HouseDetailDto dto, IHouseRepository repo) =>
+{
+
+    if (await repo.GetOneHouse(dto.Id) == null)
+    {
+        return Results.Problem($"Update failed. House with {dto.Id} was not found 😩.", statusCode: 404);
+    }
+
+    var updatedHouse = await repo.UpdateHouse(dto);
+    return Results.Ok(updatedHouse);
+
+}
+// Let Swagger know what this API endpoint will return
+).ProducesProblem(404).Produces<HouseDetailDto>(StatusCodes.Status200OK);
+
+// DELETE a house
+// [FromBody] - tells .net to look for HouseDetailDto in the request body
+app.MapDelete("/houses/{houseId:int}", async (int houseId, IHouseRepository repo) =>
+{
+
+    if (await repo.GetOneHouse(houseId) == null)
+    {
+        return Results.Problem($"Delete failed. House with {houseId} was not found 😩.", statusCode: 404);
+    }
+
+    await repo.DeleteHouse(houseId);
+    return Results.Ok($"House with id {houseId} was deleted 😁🤟");
+
+}
+// Let Swagger know what this API endpoint will return
+).ProducesProblem(404).Produces(StatusCodes.Status200OK);
+
 
 app.Run();
 

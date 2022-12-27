@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
+// Create the query cache for this app
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(

@@ -5,7 +5,7 @@ import Config from '../config';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 // import Problem from '../types/problem';
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 
 // Get all houses
 const useFetchHouses = () => {
@@ -48,6 +48,7 @@ const useUpdateHouse = () => {
 	return useMutation<AxiosResponse, AxiosError, House>(
 		house => axios.put(`${Config.baseApiUrl}/houses`, house),
 		{
+			// The first parameter is the axios response object, that we are not using in this instance, and that is why we put '_'. we are intrested only in the house instance we are updating.
 			onSuccess: (_, house) => {
 				// Invalidate the cache (causing the fetch houses to be revoked so the cache will be refreshed)
 				queryClient.invalidateQueries('houses');
@@ -65,11 +66,11 @@ const useDeleteHouse = () => {
 	return useMutation<AxiosResponse, AxiosError, House>(
 		house => axios.delete(`${Config.baseApiUrl}/houses/${house.id}`),
 		{
-			onSuccess: (_, house) => {
+			onSuccess: () => {
 				// Invalidate the cache (causing the fetch houses to be revoked so the cache will be refreshed)
 				queryClient.invalidateQueries('houses');
-				// Present the home screen refreshed after the adding of the new house
-				navigateTo(`/houses/${house.id}`);
+				// Present the home screen refreshed after the deleting the house
+				navigateTo('/');
 			},
 		}
 	);

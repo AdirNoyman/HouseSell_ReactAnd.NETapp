@@ -4,7 +4,7 @@ import { currencyFormatter } from '../config';
 import useFetchHouses from '../hooks/HouseHooks';
 // import { House } from '../types/house';
 import ApiStatus from '../ApiStatus';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const HouseList = () => {
 	const navigateTo = useNavigate();
@@ -55,9 +55,9 @@ const HouseList = () => {
 						))}
 				</tbody> */}
 
-			{/* <Link className='btn btn-primary' to='/house/add'>
+			<Link className='btn btn-primary' to='/houses/add'>
 				Add
-			</Link> */}
+			</Link>
 		</div>
 	);
 };

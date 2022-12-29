@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import toBase64 from '../toBase64';
 import { House } from '../types/house';
 
 type Args = {
@@ -15,6 +16,19 @@ const HouseForm = ({ house, submitted }: Args) => {
 		//Preventing the default behavior of the browser that will submit the form, because we want to control that and do it our self
 		e.preventDefault();
 		submitted(houseState);
+	};
+
+	const onFileSelected = async (
+		e: React.ChangeEvent<HTMLInputElement>
+	): Promise<void> => {
+		e.preventDefault();
+		e.target.files &&
+			e.target.files[0] &&
+			setHouseState({
+				...houseState,
+				// convert the image to a base 64 encoded string. That will produce a data url that we can use ia an image html element
+				photo: await toBase64(e.target.files[0]),
+			});
 	};
 
 	return (
@@ -78,7 +92,7 @@ const HouseForm = ({ house, submitted }: Args) => {
 					}
 				/>
 			</div>
-			{/* <div className='form-group mt-2'>
+			<div className='form-group mt-2'>
 				<label htmlFor='image'>Image</label>
 				<input
 					id='image'
@@ -89,7 +103,7 @@ const HouseForm = ({ house, submitted }: Args) => {
 			</div>
 			<div className='mt-2'>
 				<img src={houseState.photo}></img>
-			</div> */}
+			</div>
 			<button
 				className='btn btn-primary mt-2'
 				disabled={!houseState.address || !houseState.country}

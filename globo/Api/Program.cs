@@ -1,6 +1,7 @@
 using Api.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MiniValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,16 +55,30 @@ app.MapGet("/houses/{houseId:int}", async (int houseId, IHouseRepository repo) =
 // [FromBody] - tells .net to look for HouseDetailDto in the request body
 app.MapPost("/houses", async ([FromBody] HouseDetailDto dto, IHouseRepository repo) =>
 {
+
+    // Validate user's input
+    // errors is a dictionary of key and value of string array. Key is the name of the input field and the value is the validation errors
+    if (!MiniValidator.TryValidate(dto, out var errors))
+    {
+        return Results.ValidationProblem(errors);
+    }
     var newHouse = await repo.AddNewHouse(dto);
     return Results.Created($"/houses/{newHouse.Id}", newHouse);
 }
 // Let Swagger know what this API endpoint will return
-).Produces<HouseDetailDto>(StatusCodes.Status201Created);
+).Produces<HouseDetailDto>(StatusCodes.Status201Created)
+.ProducesValidationProblem();
 
 // UPDATE a house
 // [FromBody] - tells .net to look for HouseDetailDto in the request body
 app.MapPut("/houses", async ([FromBody] HouseDetailDto dto, IHouseRepository repo) =>
 {
+    // Validate user's input
+    // errors is a dictionary of key and value of string array. Key is the name of the input field and the value is the validation errors
+    if (!MiniValidator.TryValidate(dto, out var errors))
+    {
+        return Results.ValidationProblem(errors);
+    }
 
     if (await repo.GetOneHouse(dto.Id) == null)
     {
@@ -75,7 +90,8 @@ app.MapPut("/houses", async ([FromBody] HouseDetailDto dto, IHouseRepository rep
 
 }
 // Let Swagger know what this API endpoint will return
-).ProducesProblem(404).Produces<HouseDetailDto>(StatusCodes.Status200OK);
+).ProducesProblem(404).Produces<HouseDetailDto>(StatusCodes.Status200OK)
+.ProducesValidationProblem();
 
 // DELETE a house
 // [FromBody] - tells .net to look for HouseDetailDto in the request body

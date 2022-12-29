@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "RTuIj24ASb5NZsqi0XRbyELc7mLiurn1+kCbbUtvc9SDW1n5il7lm1BarwLLr+48PYQRwprHL5Dt1Krum/GscA==",
+  "dgSpecHash": "glT3QdmcOqyeM4TJ5IXQcXbT7NCNm25SC8JTKV7xMnTCULqF/xsak+sOCCXiNUB/+1Wb6F9GIHN0u6CwNVjt7Q==",
   "success": true,
   "projectFilePath": "/Users/adirnoyman/Library/Mobile Documents/com~apple~CloudDocs/Documents/Microsoft.NET CORE/development/ReactAnd.net_RolandGuilt/development/globo/Api/Api.csproj",
   "expectedPackageFiles": [
@@ -26,6 +26,7 @@
     "/Users/adirnoyman/.nuget/packages/microsoft.extensions.options/7.0.0/microsoft.extensions.options.7.0.0.nupkg.sha512",
     "/Users/adirnoyman/.nuget/packages/microsoft.extensions.primitives/7.0.0/microsoft.extensions.primitives.7.0.0.nupkg.sha512",
     "/Users/adirnoyman/.nuget/packages/microsoft.openapi/1.4.3/microsoft.openapi.1.4.3.nupkg.sha512",
+    "/Users/adirnoyman/.nuget/packages/minivalidation/0.7.2/minivalidation.0.7.2.nupkg.sha512",
     "/Users/adirnoyman/.nuget/packages/mono.texttemplating/2.2.1/mono.texttemplating.2.2.1.nupkg.sha512",
     "/Users/adirnoyman/.nuget/packages/sqlitepclraw.bundle_e_sqlite3/2.1.2/sqlitepclraw.bundle_e_sqlite3.2.1.2.nupkg.sha512",
     "/Users/adirnoyman/.nuget/packages/sqlitepclraw.core/2.1.2/sqlitepclraw.core.2.1.2.nupkg.sha512",

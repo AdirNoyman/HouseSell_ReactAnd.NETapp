@@ -66,3 +66,4 @@
 /Users/adirnoyman/Library/Mobile Documents/com~apple~CloudDocs/Documents/Microsoft.NET CORE/development/ReactAnd.net_RolandGuilt/development/globo/Api/bin/Debug/net7.0/runtimes/win-arm64/native/e_sqlite3.dll
 /Users/adirnoyman/Library/Mobile Documents/com~apple~CloudDocs/Documents/Microsoft.NET CORE/development/ReactAnd.net_RolandGuilt/development/globo/Api/bin/Debug/net7.0/runtimes/win-x64/native/e_sqlite3.dll
 /Users/adirnoyman/Library/Mobile Documents/com~apple~CloudDocs/Documents/Microsoft.NET CORE/development/ReactAnd.net_RolandGuilt/development/globo/Api/bin/Debug/net7.0/runtimes/win-x86/native/e_sqlite3.dll
+/Users/adirnoyman/Library/Mobile Documents/com~apple~CloudDocs/Documents/Microsoft.NET CORE/development/ReactAnd.net_RolandGuilt/development/globo/Api/bin/Debug/net7.0/MiniValidation.dll

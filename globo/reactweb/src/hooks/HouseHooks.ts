@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import Config from '../config';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Problem from '../types/problem';
 // import Problem from '../types/problem';
 // import { useEffect, useState } from 'react';
 
@@ -27,7 +28,7 @@ const useAddHouse = () => {
 	const navigateTo = useNavigate();
 	// Get the app query cache
 	const queryClient = useQueryClient();
-	return useMutation<AxiosResponse, AxiosError, House>(
+	return useMutation<AxiosResponse, AxiosError<Problem>, House>(
 		house => axios.post(`${Config.baseApiUrl}/houses`, house),
 		{
 			onSuccess: () => {
@@ -45,7 +46,7 @@ const useUpdateHouse = () => {
 	const navigateTo = useNavigate();
 	// Get the app query cache
 	const queryClient = useQueryClient();
-	return useMutation<AxiosResponse, AxiosError, House>(
+	return useMutation<AxiosResponse, AxiosError<Problem>, House>(
 		house => axios.put(`${Config.baseApiUrl}/houses`, house),
 		{
 			// The first parameter is the axios response object, that we are not using in this instance, and that is why we put '_'. we are intrested only in the house instance we are updating.

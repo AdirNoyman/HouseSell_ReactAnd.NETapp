@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAddHouse } from '../hooks/HouseHooks';
 import { House } from '../types/house';
+import ValidationSummary from '../ValidationSummary';
 import HouseForm from './HouseForm';
 
 const HouseAdd = () => {
@@ -16,7 +17,16 @@ const HouseAdd = () => {
 	};
 
 	return (
-		<HouseForm house={house} submitted={h => addHouseMutation.mutate(h)} />
+		<>
+			{/* If the mutation of the cache has returned an error, display the ValidationSummary component */}
+			{addHouseMutation.isError && (
+				<ValidationSummary error={addHouseMutation.error} />
+			)}
+			<HouseForm
+				house={house}
+				submitted={h => addHouseMutation.mutate(h)}
+			/>
+		</>
 	);
 };
 
